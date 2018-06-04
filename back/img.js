@@ -22,22 +22,9 @@ server.timeout = 240000;
 logger.info('Server running at' + host + ':' + port);
 
 //修改频率接口
-app.get('/getpic', function (req, res) {
-	fs.exists(__dirname + "/pic.jpg", function (exists) {
-		if (exists) {
-			res.send({
-				'code': 200,
-				'success': true,
-				'img': '/back/pic.jpg'
-			});
-		} else {
-			res.send({
-				'code': 200,
-				'success': false,
-				'msg': 'no pic'
-			});
-		}
-	});
+app.get('/pic.jpg', function (req, res) {
+	res.writeHead(200, { 'Content-Type': 'multipart/form-data' });
+	res.end(fs.readFileSync(__dirname + "/pic.jpg"));
 });
 
 var count;
