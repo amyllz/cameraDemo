@@ -36,54 +36,74 @@ serverSocket.on('message', function (msg, rinfo) {
 	let msgString = msg.toString();
 	if (msgString.slice(0, 4) === 'FFD8') {
 		count = 1;
-		fs.writeFileSync(__dirname + '/pic.txt', msgString, function (err) {
-			if (err) { logger.error('图片缓存文件写入失败! ID: ' + count + ' err: ' + err) }
-			else {
-				logger.info('图片缓存文件写入成功! ID: ' + count);
-				if (msgString.slice(-4) === 'FFD9') {
-					//生成图片
-					fs.readFileSync(__dirname + '/pic.txt', function (err, data) {
-						if (err) {
-							logger.error('图片缓存文件读取失败！err: ' + err);
-							return
-						} else {
-							var dataString = data.toString();
-							dataString = dataString.replace(/\ +/g, "");
-							var imgData = new Buffer(dataString, 'hex');
-							fs.writeFileSync(__dirname + '/pic.jpg', imgData, function (err) {
-								if (err) { logger.error('图片生成失败' + err) }
-								else { logger.info('图片生成成功') }
-							});
-						}
-					});
-				}
-			}
-		});
+		fs.writeFileSync(__dirname + '/pic.txt', msgString);
+		logger.info('图片缓存文件写入成功! ID: ' + count);
+		if (msgString.slice(-4) === 'FFD9') {
+			//生成图片
+			var dataString = fs.readFileSync(__dirname + '/pic.txt', 'utf-8');
+			dataString = dataString.replace(/\ +/g, "");
+			var imgData = new Buffer(dataString, 'hex');
+			fs.writeFileSync(__dirname + '/pic.jpg', imgData);
+		}
+		// fs.writeFileSync(__dirname + '/pic.txt', msgString, function (err) {
+		// 	if (err) { logger.error('图片缓存文件写入失败! ID: ' + count + ' err: ' + err) }
+		// 	else {
+		// 		logger.info('图片缓存文件写入成功! ID: ' + count);
+		// 		if (msgString.slice(-4) === 'FFD9') {
+		// 			//生成图片
+		// 			fs.readFileSync(__dirname + '/pic.txt', function (err, data) {
+		// 				if (err) {
+		// 					logger.error('图片缓存文件读取失败！err: ' + err);
+		// 					return
+		// 				} else {
+		// 					var dataString = data.toString();
+		// 					dataString = dataString.replace(/\ +/g, "");
+		// 					var imgData = new Buffer(dataString, 'hex');
+		// 					fs.writeFileSync(__dirname + '/pic.jpg', imgData, function (err) {
+		// 						if (err) { logger.error('图片生成失败' + err) }
+		// 						else { logger.info('图片生成成功') }
+		// 					});
+		// 				}
+		// 			});
+		// 		}
+		// 	}
+		// });
 	} else {
-		fs.appendFileSync(__dirname + '/pic.txt', msgString, function (err) {
-			count++;
-			if (err) { logger.error('图片缓存文件写入失败! ID: ' + count + ' err: ' + err); }
-			else {
-				logger.info('图片缓存文件写入成功! ID: ' + count);
-				if (msgString.slice(-4) === 'FFD9') {
-					//生成图片
-					fs.readFileSync(__dirname + '/pic.txt', function (err, data) {
-						if (err) {
-							logger.error('图片缓存文件读取失败！err: ' + err);
-							return
-						} else {
-							var dataString = data.toString();
-							dataString = dataString.replace(/\ +/g, "");
-							var imgData = new Buffer(dataString, 'hex');
-							fs.writeFileSync(__dirname + '/pic.jpg', imgData, function (err) {
-								if (err) { logger.error('图片生成失败' + err) }
-								else { logger.info('图片生成成功') }
-							});
-						}
-					});
-				}
-			}
-		});
+		count++;
+		fs.appendFileSync(__dirname + '/pic.txt', msgString);
+		logger.info('图片缓存文件写入成功! ID: ' + count);
+		if (msgString.slice(-4) === 'FFD9') {
+			//生成图片
+			var dataString = fs.readFileSync(__dirname + '/pic.txt', 'utf-8');
+			dataString = dataString.replace(/\ +/g, "");
+			var imgData = new Buffer(dataString, 'hex');
+			fs.writeFileSync(__dirname + '/pic.jpg', imgData);
+			logger.info('图片生成成功');
+		}
+		// fs.appendFileSync(__dirname + '/pic.txt', msgString, function (err) {
+		// 	count++;
+		// 	if (err) { logger.error('图片缓存文件写入失败! ID: ' + count + ' err: ' + err); }
+		// 	else {
+		// 		logger.info('图片缓存文件写入成功! ID: ' + count);
+		// 		if (msgString.slice(-4) === 'FFD9') {
+		// 			//生成图片
+		// 			fs.readFileSync(__dirname + '/pic.txt', function (err, data) {
+		// 				if (err) {
+		// 					logger.error('图片缓存文件读取失败！err: ' + err);
+		// 					return
+		// 				} else {
+		// 					var dataString = data.toString();
+		// 					dataString = dataString.replace(/\ +/g, "");
+		// 					var imgData = new Buffer(dataString, 'hex');
+		// 					fs.writeFileSync(__dirname + '/pic.jpg', imgData, function (err) {
+		// 						if (err) { logger.error('图片生成失败' + err) }
+		// 						else { logger.info('图片生成成功') }
+		// 					});
+		// 				}
+		// 			});
+		// 		}
+		// 	}
+		// });
 	}
 });
 
