@@ -36,13 +36,13 @@ serverSocket.on('message', function (msg, rinfo) {
 	let msgString = msg.toString();
 	if (msgString.slice(0, 4) === 'FFD8') {
 		count = 1;
-		fs.writeFile(__dirname + '/pic.txt', msgString, function (err) {
+		fs.writeFileSync(__dirname + '/pic.txt', msgString, function (err) {
 			if (err) { logger.error('图片缓存文件写入失败! ID: ' + count + ' err: ' + err) }
 			else {
 				logger.info('图片缓存文件写入成功! ID: ' + count);
 				if (msgString.slice(-4) === 'FFD9') {
 					//生成图片
-					fs.readFile(__dirname + '/pic.txt', function (err, data) {
+					fs.readFileSync(__dirname + '/pic.txt', function (err, data) {
 						if (err) {
 							logger.error('图片缓存文件读取失败！err: ' + err);
 							return
@@ -50,7 +50,7 @@ serverSocket.on('message', function (msg, rinfo) {
 							var dataString = data.toString();
 							dataString = dataString.replace(/\ +/g, "");
 							var imgData = new Buffer(dataString, 'hex');
-							fs.writeFile(__dirname + '/pic.jpg', imgData, function (err) {
+							fs.writeFileSync(__dirname + '/pic.jpg', imgData, function (err) {
 								if (err) { logger.error('图片生成失败' + err) }
 								else { logger.info('图片生成成功') }
 							});
@@ -60,14 +60,14 @@ serverSocket.on('message', function (msg, rinfo) {
 			}
 		});
 	} else {
-		fs.appendFile(__dirname + '/pic.txt', msgString, function (err) {
+		fs.appendFileSync(__dirname + '/pic.txt', msgString, function (err) {
 			count++;
 			if (err) { logger.error('图片缓存文件写入失败! ID: ' + count + ' err: ' + err); }
 			else {
 				logger.info('图片缓存文件写入成功! ID: ' + count);
 				if (msgString.slice(-4) === 'FFD9') {
 					//生成图片
-					fs.readFile(__dirname + '/pic.txt', function (err, data) {
+					fs.readFileSync(__dirname + '/pic.txt', function (err, data) {
 						if (err) {
 							logger.error('图片缓存文件读取失败！err: ' + err);
 							return
@@ -75,7 +75,7 @@ serverSocket.on('message', function (msg, rinfo) {
 							var dataString = data.toString();
 							dataString = dataString.replace(/\ +/g, "");
 							var imgData = new Buffer(dataString, 'hex');
-							fs.writeFile(__dirname + '/pic.jpg', imgData, function (err) {
+							fs.writeFileSync(__dirname + '/pic.jpg', imgData, function (err) {
 								if (err) { logger.error('图片生成失败' + err) }
 								else { logger.info('图片生成成功') }
 							});
