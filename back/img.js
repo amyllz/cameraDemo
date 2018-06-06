@@ -32,7 +32,6 @@ var count;
 serverSocket.on('message', function (msg, rinfo) {
 	console.log('----------------------recive msg----------------------');
 	//logger.info('recvData %s(%d bytes) from client %s:%d', msg, msg.length, rinfo.address, rinfo.port);
-	var count;
 	let data4 = new Buffer(msg, 'ascii').toString('hex');
 	let msgString = data4;
 	logger.info('recvData %s(%d bytes) from client %s:%d', msgString, msgString.length, rinfo.address, rinfo.port);
