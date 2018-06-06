@@ -31,6 +31,7 @@ var count;
 //接收数据操作
 serverSocket.on('message', function (msg, rinfo) {
 	console.log('----------------------recive msg----------------------');
+	console.log('--------------::::   ' + msg);
 	logger.info('recvData %s(%d bytes) from client %s:%d', msg, msg.length, rinfo.address, rinfo.port);
 	//var count;
 	let msgString = msg.toString();
