@@ -74,7 +74,7 @@ serverSocket.on('message', function (msg, rinfo) {
 		count++;
 		fs.appendFileSync(__dirname + '/pic.txt', msgString);
 		logger.info('图片缓存文件写入成功! ID: ' + count);
-		if (msgString.slice(-4) === 'FFD9') {
+		if (msgString.slice(-4) === 'ffd9') {
 			//生成图片
 			var dataString = fs.readFileSync(__dirname + '/pic.txt', 'utf-8');
 			dataString = dataString.replace(/\ +/g, "");
