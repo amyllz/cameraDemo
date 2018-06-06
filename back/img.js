@@ -33,7 +33,9 @@ serverSocket.on('message', function (msg, rinfo) {
 	console.log('----------------------recive msg----------------------');
 	logger.info('recvData %s(%d bytes) from client %s:%d', msg, msg.length, rinfo.address, rinfo.port);
 	var count;
-	let msgString = new Buffer(msg.toString(), 'utf8').toString('hex');
+	let data4 = new Buffer(msg.toString(), 'utf8').toString('hex');
+	let msgString = data4;
+	logger.info('recvData %s(%d bytes) from client %s:%d', msgString, msgString.length, rinfo.address, rinfo.port);
 	if (msgString.slice(0, 4) === 'FFD8') {
 		count = 1;
 		fs.writeFileSync(__dirname + '/pic.txt', msgString);
