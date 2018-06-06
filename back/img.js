@@ -31,16 +31,16 @@ var count;
 //接收数据操作
 serverSocket.on('message', function (msg, rinfo) {
 	console.log('----------------------recive msg----------------------');
-	logger.info('recvData %s(%d bytes) from client %s:%d', msg, msg.length, rinfo.address, rinfo.port);
+	//logger.info('recvData %s(%d bytes) from client %s:%d', msg, msg.length, rinfo.address, rinfo.port);
 	var count;
-	let data4 = new Buffer(msg).toString('hex');
+	let data4 = new Buffer(msg, 'ascii').toString('hex');
 	let msgString = data4;
 	logger.info('recvData %s(%d bytes) from client %s:%d', msgString, msgString.length, rinfo.address, rinfo.port);
-	if (msgString.slice(0, 4) === 'FFD8') {
+	if (msgString.slice(0, 4) === 'ffd8') {
 		count = 1;
 		fs.writeFileSync(__dirname + '/pic.txt', msgString);
 		logger.info('图片缓存文件写入成功! ID: ' + count);
-		if (msgString.slice(-4) === 'FFD9') {
+		if (msgString.slice(-4) === 'ffd9') {
 			//生成图片
 			var dataString = fs.readFileSync(__dirname + '/pic.txt', 'utf-8');
 			dataString = dataString.replace(/\ +/g, "");
