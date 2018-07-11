@@ -11,23 +11,6 @@ export default class SignIn extends Component {
   
 
   render() {
-    const props = {
-      name: 'file',
-      action: '//jsonplaceholder.typicode.com/posts/',
-      headers: {
-        authorization: 'authorization-text',
-      },
-      onChange(info) {
-        if (info.file.status !== 'uploading') {
-          console.log(info.file, info.fileList);
-        }
-        if (info.file.status === 'done') {
-          message.success(`${info.file.name} file uploaded successfully`);
-        } else if (info.file.status === 'error') {
-          message.error(`${info.file.name} file upload failed.`);
-        }
-      },
-    };
     return (
       <div className="SignIn-body">
         <p style={{ textAlign: 'center', fontFamily: 'Microsoft YaHei', fontSize: '18px', paddingTop: "50px" }}>上传图像</p>
